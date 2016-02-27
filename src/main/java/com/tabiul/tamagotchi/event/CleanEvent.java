@@ -3,11 +3,11 @@ package com.tabiul.tamagotchi.event;
 import com.tabiul.tamagotchi.Configuration;
 import com.tabiul.tamagotchi.Notification;
 import com.tabiul.tamagotchi.Pet;
-import com.tabiul.tamagotchi.Stat.Stat;
 
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import com.tabiul.tamagotchi.stat.Stat;
 /**
  * @author tabiul <tabiul@gmail.com>
  */
@@ -18,7 +18,8 @@ import java.util.function.Consumer;
  * else nothing happens
  */
 public class CleanEvent extends Event {
-    public CleanEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public CleanEvent(Pet pet, Configuration configuration, Consumer<Class<? extends
+        Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
@@ -26,13 +27,21 @@ public class CleanEvent extends Event {
     @Override
     public Optional<Notification> action(long currTick) {
         pet.addEvent(EventType.CLEAN_EVENT, currTick);
-        long pooTime = pet.whenEventHappen(EventType.POOP_EVENT);
-        double diff = timeUtils.hour(pooTime, currTick);
-        Stat healthStat = pet.getStat(Stat.StatType.HEALTH);
-        long healthValue = configuration.getHealthValue();
-        if (diff < 1) {
-            healthStat.updateStat(healthStat.getStat() + healthValue);
-            return Optional.of(new Notification("thanks for cleaning the poo"));
+        Optional<Long> optional = pet.whenEventHappen(EventType.POOP_EVENT);
+        if (optional.isPresent()) { // means there is poo
+            long pooTime = optional.get();
+            pet.removeEvent(EventType.POOP_EVENT);
+            double diff = timeUtils.hour(pooTime, currTick);
+            Stat healthStat = pet.getStat(Stat.StatType.HEALTH);
+            long healthValue = configuration.getHealthValue();
+            if (diff <= configuration.getCleanPooWithinHour()) {
+                healthStat.updateStat(healthStat.getStat() + healthValue);
+                return Optional.of(new Notification("thanks for cleaning the poo so " +
+                    "fast"));
+            }
+            healthStat.updateStat(healthStat.getStat() - healthValue);
+            return Optional.of(new Notification("thanks for cleaning the poo so " +
+                "but sad that it took so long"));
         }
         return Optional.empty();
     }

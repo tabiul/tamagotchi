@@ -1,8 +1,8 @@
 package com.tabiul.tamagotchi;
 
-import com.tabiul.tamagotchi.Stat.HappinessStat;
-import com.tabiul.tamagotchi.Stat.HealthStat;
-import com.tabiul.tamagotchi.Stat.Stat;
+import com.tabiul.tamagotchi.stat.HappinessStat;
+import com.tabiul.tamagotchi.stat.HealthStat;
+import com.tabiul.tamagotchi.stat.Stat;
 import com.tabiul.tamagotchi.event.FeedEvent;
 import org.junit.Test;
 

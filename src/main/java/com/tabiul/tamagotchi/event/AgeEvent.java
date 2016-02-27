@@ -3,9 +3,7 @@ package com.tabiul.tamagotchi.event;
 import com.tabiul.tamagotchi.Configuration;
 import com.tabiul.tamagotchi.Notification;
 import com.tabiul.tamagotchi.Pet;
-import com.tabiul.tamagotchi.Stat.Stat;
 
-import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -17,7 +15,6 @@ import java.util.function.Consumer;
  * This event takes care of increasing the age of the pet
  */
 public class AgeEvent extends Event {
-    private long lastTick = 0;
 
     public AgeEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
         generateEvent) {
@@ -26,8 +23,13 @@ public class AgeEvent extends Event {
 
     @Override
     public Optional<Notification> action(long currTick) {
-        if (timeUtils.year(lastTick, currTick) > 1) {
-            lastTick = currTick;
+        long lastAgeEvent = 0;
+        Optional<Long> optional = pet.whenEventHappen(EventType.AGE_EVENT);
+        if (optional.isPresent()) {
+            lastAgeEvent = optional.get();
+        }
+        if (timeUtils.year(lastAgeEvent, currTick) >= 1) {
+            pet.addEvent(EventType.AGE_EVENT, currTick);
             pet.setAge(pet.getAge() + 1);
             return Optional.of(new Notification("happy birthday " + pet.getName() + ", " +
                 "you are " + pet.getAge() + " years old today"));

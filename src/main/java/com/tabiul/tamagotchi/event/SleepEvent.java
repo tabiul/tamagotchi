@@ -3,7 +3,7 @@ package com.tabiul.tamagotchi.event;
 import com.tabiul.tamagotchi.Configuration;
 import com.tabiul.tamagotchi.Notification;
 import com.tabiul.tamagotchi.Pet;
-import com.tabiul.tamagotchi.Stat.Stat;
+import com.tabiul.tamagotchi.stat.Stat;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -21,7 +21,8 @@ import java.util.function.Consumer;
  */
 public class SleepEvent extends Event {
 
-    public SleepEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public SleepEvent(Pet pet, Configuration configuration, Consumer<Class<? extends
+        Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
@@ -33,7 +34,11 @@ public class SleepEvent extends Event {
         long healthValue = configuration.getHealthValue();
         long happinessValue = configuration.getHappinessValue();
         if (Pet.State.SLEEPING != pet.getState()) {
-            long awakeEvent = pet.whenEventHappen(EventType.AWAKE_EVENT);
+            long awakeEvent = 0;
+            Optional<Long> optional = pet.whenEventHappen(EventType.AWAKE_EVENT);
+            if (optional.isPresent()) {
+                awakeEvent = optional.get();
+            }
             double diff = timeUtils.hour(awakeEvent, currTick);
             if (diff > 12) {
                 healthStat.updateStat(healthStat.getStat() + healthValue);

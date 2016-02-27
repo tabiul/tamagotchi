@@ -1,0 +1,5 @@
+<FindBugsFilter>
+  <Match>
+    <Class name="com.tabiul.tamagotchi.*" />
+  </Match>
+</FindBugsFilter>

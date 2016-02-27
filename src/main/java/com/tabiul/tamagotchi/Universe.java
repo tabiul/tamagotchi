@@ -1,6 +1,6 @@
 package com.tabiul.tamagotchi;
 
-import com.tabiul.tamagotchi.Stat.Stat;
+import com.tabiul.tamagotchi.stat.Stat;
 import com.tabiul.tamagotchi.event.AgeEvent;
 import com.tabiul.tamagotchi.event.AwakeEvent;
 import com.tabiul.tamagotchi.event.Event;
@@ -72,7 +72,7 @@ public class Universe extends Observable implements Closeable {
         for (Stat stat : pet.getStats().values()) {
             if (stat.getStat() < 0) {
                 alertObserver(new Notification(MessageFormat.format("pet died due to " +
-                    "the stat " +
+                        "the stat " +
                         "{0} fell " +
                         "below 0",
                     stat.name())));
@@ -90,6 +90,7 @@ public class Universe extends Observable implements Closeable {
     public void bigBang() {
         executorService = Executors.newSingleThreadExecutor();
         List<Event> universeEvents = createUniverseEvents();
+        pet.addEvent(Event.EventType.AWAKE_EVENT, 0);
         executorService.execute(() -> {
 
             while (!hasPetDied()) {
@@ -112,12 +113,16 @@ public class Universe extends Observable implements Closeable {
 
     }
 
-    public <T extends Event> void addEvent(Class<T> clazz) throws
-        NoSuchMethodException, IllegalAccessException, InvocationTargetException,
-        InstantiationException {
-        Constructor<T> c = clazz.getConstructor(Pet.class, Configuration.class, Consumer
-            .class);
-        queue.add(c.newInstance(pet, configuration, consumer));
+    public <T extends Event> void addEvent(Class<T> clazz) {
+        try {
+            Constructor<T> c = clazz.getConstructor(Pet.class, Configuration.class,
+                Consumer.class);
+            queue.add(c.newInstance(pet, configuration, consumer));
+        } catch (Exception ex) {
+            throw new RuntimeException(ex.getMessage());
+
+        }
+
     }
 
     public boolean isUniverseDead() {

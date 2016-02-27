@@ -1,11 +1,12 @@
 package com.tabiul.tamagotchi;
 
-import com.tabiul.tamagotchi.Stat.Stat;
 import com.tabiul.tamagotchi.event.Event;
+import com.tabiul.tamagotchi.stat.Stat;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author tabiul <tabiu@gmail.com>
@@ -64,11 +65,15 @@ public class Pet {
         eventTracker.put(eventType, when);
     }
 
-    public long whenEventHappen(Event.EventType eventType) {
+    public void removeEvent(Event.EventType eventType) {
+        eventTracker.remove(eventType);
+    }
+
+    public Optional<Long> whenEventHappen(Event.EventType eventType) {
         if (eventTracker.containsKey(eventType)) {
-            return eventTracker.get(eventType);
+            return Optional.of(eventTracker.get(eventType));
         }
-        return 0;
+        return Optional.empty();
     }
 
     public Map<Event.EventType, Long> getEvents() {

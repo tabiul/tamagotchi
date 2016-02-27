@@ -3,7 +3,7 @@ package com.tabiul.tamagotchi.event;
 import com.tabiul.tamagotchi.Configuration;
 import com.tabiul.tamagotchi.Notification;
 import com.tabiul.tamagotchi.Pet;
-import com.tabiul.tamagotchi.Stat.Stat;
+import com.tabiul.tamagotchi.stat.Stat;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -20,7 +20,8 @@ import java.util.function.Consumer;
  */
 public class PlayEvent extends Event {
 
-    public PlayEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public PlayEvent(Pet pet, Configuration configuration, Consumer<Class<? extends
+        Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
@@ -31,21 +32,25 @@ public class PlayEvent extends Event {
         long happinessValue = configuration.getHappinessValue();
         Stat healthStat = pet.getStat(Stat.StatType.HEALTH);
         long healthValue = configuration.getHealthValue();
-        long lastPlayed = pet.whenEventHappen(EventType.PLAY_EVENT);
 
         if (pet.getState() == Pet.State.SLEEPING) {
             happinessStat.updateStat(happinessStat.getStat() - happinessValue);
             return Optional.of(new Notification("no playing when sleeping"));
         } else {
-            double diff = timeUtils.hour(lastPlayed, currTick);
-            pet.addEvent(EventType.PLAY_EVENT, currTick);
-            if (diff < 2) {
-                healthStat.updateStat(healthStat.getStat() - healthValue);
-                return Optional.of(new Notification("too tiring"));
-            } else {
-                happinessStat.updateStat(happinessStat.getStat() + happinessValue);
-                return Optional.of(new Notification("let's play"));
+
+            Optional<Long> optional = pet.whenEventHappen(EventType.PLAY_EVENT);
+            String message;
+            if (optional.isPresent()) {
+                long lastPlayed = optional.get();
+                double diff = timeUtils.hour(lastPlayed, currTick);
+                if (diff < 2) {
+                    healthStat.updateStat(healthStat.getStat() - healthValue);
+                    return Optional.of(new Notification("too tiring"));
+                }
             }
+            pet.addEvent(EventType.PLAY_EVENT, currTick);
+            happinessStat.updateStat(happinessStat.getStat() + happinessValue);
+            return Optional.of(new Notification("let's play"));
         }
     }
 }

@@ -2,6 +2,10 @@ group 'com.tabiul'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'findbugs'
+apply plugin: "jacoco"
+
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -13,4 +17,31 @@ repositories {
 dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
     testCompile group: 'junit', name: 'junit', version: '4.5'
+}
+
+jar {
+    sourceSets.main.java.srcDirs.each { from it }
+    from configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest {
+        attributes "Main-Class": "com.tabiul.tamagotchi.Tamagotchi"
+    }
+}
+
+findbugs{
+    toolVersion = "3.0.1"
+    reportLevel = "medium"
+    reportsDir = file("$rootProject.projectDir/output/findbugs")
+    includeFilter = file("$rootProject.projectDir/config/findbugs/includeFilter.xml")
+}
+
+jacoco {
+    toolVersion  = "0.7.0.201403182114"
+    reportsDir = file("$rootProject.projectDir/output/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled true
+    }
 }

@@ -1,4 +1,4 @@
-package com.tabiul.tamagotchi.Stat;
+package com.tabiul.tamagotchi.stat;
 
 /**
  * @author tabiul <tabiul@gmail.com>
@@ -8,7 +8,6 @@ public class HappinessStat implements Stat {
 
     @Override
     public String name() {
-
         return "happiness";
     }
 

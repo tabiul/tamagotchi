@@ -16,14 +16,19 @@ import java.util.function.Consumer;
  */
 public class PoopEvent extends Event {
 
-    public PoopEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public PoopEvent(Pet pet, Configuration configuration, Consumer<Class<? extends
+        Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
 
     @Override
     public Optional<Notification> action(long currTick) {
-        long lastPoo = pet.whenEventHappen(EventType.POOP_EVENT);
+        long lastPoo = 0;
+        Optional<Long> optional = pet.whenEventHappen(EventType.POOP_EVENT);
+        if (optional.isPresent()) {
+            lastPoo = optional.get();
+        }
         double day = timeUtils.day(lastPoo, currTick);
         if (day > 1) {
             pet.addEvent(EventType.POOP_EVENT, currTick);

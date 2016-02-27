@@ -18,7 +18,8 @@ import java.util.function.Consumer;
  */
 public class SelfSleepEvent extends Event {
 
-    public SelfSleepEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public SelfSleepEvent(Pet pet, Configuration configuration, Consumer<Class<?
+        extends Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
@@ -26,7 +27,11 @@ public class SelfSleepEvent extends Event {
     @Override
     public Optional<Notification> action(long currTick) {
         if (Pet.State.SLEEPING != pet.getState()) {
-            long awakeEvent = pet.whenEventHappen(EventType.AWAKE_EVENT);
+            long awakeEvent = 0;
+            Optional<Long> optional = pet.whenEventHappen(EventType.AWAKE_EVENT);
+            if (optional.isPresent()) {
+                awakeEvent = optional.get();
+            }
             double diff = timeUtils.hour(awakeEvent, currTick);
             if (diff > 14) {
                 pet.setState(Pet.State.SLEEPING);

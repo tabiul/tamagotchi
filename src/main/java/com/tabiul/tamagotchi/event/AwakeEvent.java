@@ -15,7 +15,8 @@ import java.util.function.Consumer;
  * This is an event that moves the pet from sleep to awake after 8 hr of sleep
  */
 public class AwakeEvent extends Event {
-    public AwakeEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public AwakeEvent(Pet pet, Configuration configuration, Consumer<Class<? extends
+        Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
@@ -23,9 +24,13 @@ public class AwakeEvent extends Event {
     @Override
     public Optional<Notification> action(long currTick) {
         if (pet.getState() == Pet.State.SLEEPING) {
-            long sleepTick = pet.whenEventHappen(EventType.SLEEP_EVENT);
-            double diff = timeUtils.hour(sleepTick, currTick);
-            if (diff > 8) {
+            Optional<Long> optional = pet.whenEventHappen(EventType.AWAKE_EVENT);
+            if (!optional.isPresent()) {
+                throw new RuntimeException("expected a awake event before a sleep event");
+            }
+            long awakeTick = optional.get();
+            double diff = timeUtils.hour(awakeTick, currTick);
+            if (diff >= 8) {
                 pet.setState(Pet.State.AWAKE);
                 pet.addEvent(EventType.AWAKE_EVENT, currTick);
                 return Optional.of(new Notification("waky, waky......."));

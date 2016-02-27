@@ -9,6 +9,7 @@ public class Configuration {
     private long maxAge = 100;
     private long healthValue = 10;
     private long happinessValue = 10;
+    private long cleanPooWithinHour = 1;
 
     public long getTickPerSecond() {
         return tickPerSecond;
@@ -53,5 +54,13 @@ public class Configuration {
 
     public void setHappinessValue(long happinessValue) {
         this.happinessValue = happinessValue;
+    }
+
+    public long getCleanPooWithinHour() {
+        return cleanPooWithinHour;
+    }
+
+    public void setCleanPooWithinHour(long cleanPooWithinHour) {
+        this.cleanPooWithinHour = cleanPooWithinHour;
     }
 }

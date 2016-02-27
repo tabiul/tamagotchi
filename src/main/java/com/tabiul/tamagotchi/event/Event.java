@@ -18,7 +18,8 @@ public abstract class Event {
         SLEEP_EVENT,
         PLAY_EVENT,
         POOP_EVENT,
-        CLEAN_EVENT
+        CLEAN_EVENT,
+        AGE_EVENT
     }
 
     protected final Configuration configuration;

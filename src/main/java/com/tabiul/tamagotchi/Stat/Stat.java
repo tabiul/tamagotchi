@@ -1,4 +1,4 @@
-package com.tabiul.tamagotchi.Stat;
+package com.tabiul.tamagotchi.stat;
 
 /**
  * @author tabiul <tabiul@gmail.com>

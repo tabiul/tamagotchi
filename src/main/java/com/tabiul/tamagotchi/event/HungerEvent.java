@@ -3,7 +3,7 @@ package com.tabiul.tamagotchi.event;
 import com.tabiul.tamagotchi.Configuration;
 import com.tabiul.tamagotchi.Notification;
 import com.tabiul.tamagotchi.Pet;
-import com.tabiul.tamagotchi.Stat.Stat;
+import com.tabiul.tamagotchi.stat.Stat;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -19,14 +19,19 @@ import java.util.function.Consumer;
 public class HungerEvent extends Event {
     private static final int feedDuration = 4; // 4 hr
 
-    public HungerEvent(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
+    public HungerEvent(Pet pet, Configuration configuration, Consumer<Class<? extends
+        Event>>
         generateEvent) {
         super(pet, configuration, generateEvent);
     }
 
     @Override
     public Optional<Notification> action(long currTick) {
-        long lastFeedTick = pet.whenEventHappen(EventType.FEED_EVENT);
+        long lastFeedTick = 0;
+        Optional<Long> optional = pet.whenEventHappen(EventType.FEED_EVENT);
+        if (optional.isPresent()) {
+            lastFeedTick = optional.get();
+        }
         double diffHour = timeUtils.hour(lastFeedTick, currTick);
         if (pet.getState() == Pet.State.AWAKE) {
             if (diffHour > feedDuration) { // it has been more than 4 hr since last feed
