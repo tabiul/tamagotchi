@@ -39,7 +39,6 @@ public class PlayEvent extends Event {
         } else {
 
             Optional<Long> optional = pet.whenEventHappen(EventType.PLAY_EVENT);
-            String message;
             if (optional.isPresent()) {
                 long lastPlayed = optional.get();
                 double diff = timeUtils.hour(lastPlayed, currTick);

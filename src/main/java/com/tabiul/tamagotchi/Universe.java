@@ -1,16 +1,15 @@
 package com.tabiul.tamagotchi;
 
-import com.tabiul.tamagotchi.stat.Stat;
 import com.tabiul.tamagotchi.event.AgeEvent;
 import com.tabiul.tamagotchi.event.AwakeEvent;
 import com.tabiul.tamagotchi.event.Event;
 import com.tabiul.tamagotchi.event.HungerEvent;
 import com.tabiul.tamagotchi.event.PoopCheckEvent;
 import com.tabiul.tamagotchi.event.SelfSleepEvent;
+import com.tabiul.tamagotchi.stat.Stat;
 
 import java.io.Closeable;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class Universe extends Observable implements Closeable {
     private final Configuration configuration;
     private ExecutorService executorService;
     private final Pet pet;
-    private ConcurrentLinkedQueue<Event> queue = new ConcurrentLinkedQueue();
+    private ConcurrentLinkedQueue<Event> queue = new ConcurrentLinkedQueue<>();
     private volatile boolean isDead = false;
     private final Consumer<Class<? extends Event>> consumer = (c) -> {
         try {
@@ -96,10 +95,10 @@ public class Universe extends Observable implements Closeable {
             while (!hasPetDied()) {
                 while (!queue.isEmpty()) {
                     Event event = queue.remove();
-                    event.action(tick.get()).ifPresent(n -> alertObserver(n));
+                    event.action(tick.get()).ifPresent(this::alertObserver);
                 }
                 for (Event event : universeEvents) {
-                    event.action(tick.get()).ifPresent(n -> alertObserver(n));
+                    event.action(tick.get()).ifPresent(this::alertObserver);
                 }
                 try {
                     Thread.sleep(configuration.getHowOftenGenerateTick());
