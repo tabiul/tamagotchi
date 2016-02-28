@@ -1,4 +1,4 @@
-package com.tabiul.tamagotchi;
+package com.tabiul.tamagotchi.util;
 
 /**
  * @author tabiul <tabiul@gmail.com>

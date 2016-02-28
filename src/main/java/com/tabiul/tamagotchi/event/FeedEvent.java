@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import com.tabiul.tamagotchi.stat.Stat;
 
@@ -46,7 +46,7 @@ public class FeedEvent extends Event {
             long healthValue = configuration.getHealthValue();
             if (lastFeedOptional.isPresent()) {
                 long lastFeedTick = lastFeedOptional.get();
-                double diffHour = timeUtils.hour(lastFeedTick, currTick);
+                double diffHour = time.hour(lastFeedTick, currTick);
                 if (diffHour <= 2) { // last time feed is less than 2 hr
                     healthStat.updateStat(healthStat.getStat() - healthValue);
                     pet.addEvent(EventType.FEED_EVENT, currTick);

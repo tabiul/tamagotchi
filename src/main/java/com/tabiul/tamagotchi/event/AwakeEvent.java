@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 
 import java.util.Optional;
@@ -29,7 +29,7 @@ public class AwakeEvent extends Event {
                 throw new RuntimeException("expected a awake event before a sleep event");
             }
             long awakeTick = optional.get();
-            double diff = timeUtils.hour(awakeTick, currTick);
+            double diff = time.hour(awakeTick, currTick);
             if (diff >= 8) {
                 pet.setState(Pet.State.AWAKE);
                 pet.addEvent(EventType.AWAKE_EVENT, currTick);

@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 
 import java.util.Optional;
@@ -29,7 +29,7 @@ public class PoopEvent extends Event {
         if (optional.isPresent()) {
             lastPoo = optional.get();
         }
-        double day = timeUtils.day(lastPoo, currTick);
+        double day = time.day(lastPoo, currTick);
         if (day > 1) {
             pet.addEvent(EventType.POOP_EVENT, currTick);
             return Optional.of(new Notification("I have done po po"));

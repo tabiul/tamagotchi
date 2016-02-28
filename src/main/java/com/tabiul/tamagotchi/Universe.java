@@ -7,6 +7,8 @@ import com.tabiul.tamagotchi.event.HungerEvent;
 import com.tabiul.tamagotchi.event.PoopCheckEvent;
 import com.tabiul.tamagotchi.event.SelfSleepEvent;
 import com.tabiul.tamagotchi.stat.Stat;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 
 import java.io.Closeable;
 import java.lang.reflect.Constructor;
@@ -29,13 +31,7 @@ public class Universe extends Observable implements Closeable {
     private final Pet pet;
     private ConcurrentLinkedQueue<Event> queue = new ConcurrentLinkedQueue<>();
     private volatile boolean isDead = false;
-    private final Consumer<Class<? extends Event>> consumer = (c) -> {
-        try {
-            addEvent(c);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    };
+    private final Consumer<Class<? extends Event>> consumer = this::addEvent;
     private final AtomicLong tick = new AtomicLong(0);
 
     public Universe(Pet pet, Configuration configuration) {

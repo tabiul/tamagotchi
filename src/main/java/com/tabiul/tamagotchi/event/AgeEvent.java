@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 
 import java.util.Optional;
@@ -28,7 +28,7 @@ public class AgeEvent extends Event {
         if (optional.isPresent()) {
             lastAgeEvent = optional.get();
         }
-        if (timeUtils.year(lastAgeEvent, currTick) >= 1) {
+        if (time.year(lastAgeEvent, currTick) >= 1) {
             pet.addEvent(EventType.AGE_EVENT, currTick);
             pet.setAge(pet.getAge() + 1);
             return Optional.of(new Notification("happy birthday " + pet.getName() + ", " +

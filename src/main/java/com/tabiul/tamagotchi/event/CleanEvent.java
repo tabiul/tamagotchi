@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class CleanEvent extends Event {
         if (optional.isPresent()) { // means there is poo
             long pooTime = optional.get();
             pet.removeEvent(EventType.POOP_EVENT);
-            double diff = timeUtils.hour(pooTime, currTick);
+            double diff = time.hour(pooTime, currTick);
             Stat healthStat = pet.getStat(Stat.StatType.HEALTH);
             long healthValue = configuration.getHealthValue();
             if (diff <= configuration.getCleanPooWithinHour()) {

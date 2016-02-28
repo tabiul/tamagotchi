@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import com.tabiul.tamagotchi.stat.Stat;
 
@@ -41,7 +41,7 @@ public class PlayEvent extends Event {
             Optional<Long> optional = pet.whenEventHappen(EventType.PLAY_EVENT);
             if (optional.isPresent()) {
                 long lastPlayed = optional.get();
-                double diff = timeUtils.hour(lastPlayed, currTick);
+                double diff = time.hour(lastPlayed, currTick);
                 if (diff < 2) {
                     healthStat.updateStat(healthStat.getStat() - healthValue);
                     return Optional.of(new Notification("too tiring"));

@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import com.tabiul.tamagotchi.stat.Stat;
 
@@ -32,7 +32,7 @@ public class HungerEvent extends Event {
         if (optional.isPresent()) {
             lastFeedTick = optional.get();
         }
-        double diffHour = timeUtils.hour(lastFeedTick, currTick);
+        double diffHour = time.hour(lastFeedTick, currTick);
         if (pet.getState() == Pet.State.AWAKE) {
             if (diffHour > feedDuration) { // it has been more than 4 hr since last feed
                 // the pet is awake

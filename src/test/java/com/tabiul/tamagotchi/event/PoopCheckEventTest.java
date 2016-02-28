@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import com.tabiul.tamagotchi.stat.HealthStat;
 import com.tabiul.tamagotchi.stat.Stat;
@@ -22,7 +22,7 @@ public class PoopCheckEventTest {
     @Test
     public void testCheckEvery30Mins() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(1800); // 1 tick = 30 min
         configuration.setHealthValue(10);
         configuration.setCleanPooWithinHour(1);
@@ -48,7 +48,7 @@ public class PoopCheckEventTest {
     @Test
     public void testNoPoo() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(1800); // 1 tick = 30 min
         configuration.setHealthValue(10);
         configuration.setCleanPooWithinHour(1);
@@ -73,7 +73,7 @@ public class PoopCheckEventTest {
     @Test
     public void testPooWithClean() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(1800); // 1 tick = 30 min
         configuration.setHealthValue(10);
         configuration.setCleanPooWithinHour(1);

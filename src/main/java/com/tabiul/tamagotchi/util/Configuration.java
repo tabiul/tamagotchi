@@ -1,4 +1,4 @@
-package com.tabiul.tamagotchi;
+package com.tabiul.tamagotchi.util;
 
 /**
  * @author tabiul <tabiul@gmail.com>
@@ -11,7 +11,16 @@ public class Configuration {
     private long happinessValue = 10;
     private long cleanPooWithinHour = 1;
 
+    private Configuration() {
+
+    }
+
+    public static Configuration newInstance() {
+        return new Configuration();
+    }
+
     public long getTickPerSecond() {
+
         return tickPerSecond;
     }
 

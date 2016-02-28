@@ -8,6 +8,7 @@ public class HappinessStat implements Stat {
 
     @Override
     public String name() {
+
         return "happiness";
     }
 

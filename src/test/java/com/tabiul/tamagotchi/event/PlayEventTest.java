@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import com.tabiul.tamagotchi.stat.HappinessStat;
 import com.tabiul.tamagotchi.stat.HealthStat;
@@ -22,7 +22,7 @@ public class PlayEventTest {
     @Test
     public void playWhenSleeping() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(3600); // 1 tick = 1 hr
         configuration.setHealthValue(10);
         configuration.setHappinessValue(10);
@@ -51,7 +51,7 @@ public class PlayEventTest {
     @Test
     public void playTooOften() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(3600); // 1 tick = 1 hr
         configuration.setHealthValue(10);
         configuration.setHappinessValue(10);
@@ -85,7 +85,7 @@ public class PlayEventTest {
     @Test
     public void playNormal() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(3600); // 1 tick = 1 hr
         configuration.setHealthValue(10);
         configuration.setHappinessValue(10);

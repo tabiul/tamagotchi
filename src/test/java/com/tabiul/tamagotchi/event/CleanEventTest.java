@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import com.tabiul.tamagotchi.stat.HealthStat;
 import com.tabiul.tamagotchi.stat.Stat;
@@ -20,9 +20,9 @@ import static org.junit.Assert.assertTrue;
 public class CleanEventTest {
 
     @Test
-    public void testCleanEventWhenThereisNoPoo(){
+    public void testCleanEventWhenThereisNoPoo() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(3600); // 1 tick = 1 hr
         configuration.setCleanPooWithinHour(1);
         Consumer<Class<? extends Event>> consumer = (e) -> {
@@ -34,9 +34,9 @@ public class CleanEventTest {
     }
 
     @Test
-    public void testCleanEventWhenThereisPoo(){
+    public void testCleanEventWhenThereisPoo() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(3600); // 1 tick = 1 hr
         configuration.setHealthValue(10);
         configuration.setCleanPooWithinHour(1);
@@ -49,14 +49,15 @@ public class CleanEventTest {
         not = cleanEvent.action(2);
         assertTrue(not.isPresent());
         assertEquals("thanks for cleaning the poo so fast", not.get().getMessage());
-        assertEquals(configuration.getHealthValue(), pet.getStat(Stat.StatType.HEALTH).getStat());
+        assertEquals(configuration.getHealthValue(), pet.getStat(Stat.StatType.HEALTH)
+            .getStat());
         assertFalse(pet.whenEventHappen(Event.EventType.POOP_EVENT).isPresent());
     }
 
     @Test
-    public void testCleanEventWhenThereisPooButTooLate(){
+    public void testCleanEventWhenThereisPooButTooLate() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(3600); // 1 tick = 1 hr
         configuration.setHealthValue(10);
         configuration.setCleanPooWithinHour(1);
@@ -68,8 +69,10 @@ public class CleanEventTest {
         Optional<Notification> not;
         not = cleanEvent.action(3);
         assertTrue(not.isPresent());
-        assertEquals("thanks for cleaning the poo so but sad that it took so long", not.get().getMessage());
-        assertEquals(-configuration.getHealthValue(), pet.getStat(Stat.StatType.HEALTH).getStat());
+        assertEquals("thanks for cleaning the poo so but sad that it took so long", not
+            .get().getMessage());
+        assertEquals(-configuration.getHealthValue(), pet.getStat(Stat.StatType.HEALTH)
+            .getStat());
         assertFalse(pet.whenEventHappen(Event.EventType.POOP_EVENT).isPresent());
     }
 }

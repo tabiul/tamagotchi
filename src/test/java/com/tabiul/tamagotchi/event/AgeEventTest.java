@@ -1,7 +1,7 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class AgeEventTest {
     @Test
     public void testAction() {
         Pet pet = new Pet("test", "male", 1);
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         configuration.setTickPerSecond(2592000); // 1 tick = 1 month
         Consumer<Class<? extends Event>> consumer = (e) -> {
         }; // do nothing

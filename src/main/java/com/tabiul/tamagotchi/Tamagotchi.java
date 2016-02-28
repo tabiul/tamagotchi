@@ -7,12 +7,13 @@ import com.tabiul.tamagotchi.event.SleepEvent;
 import com.tabiul.tamagotchi.stat.HappinessStat;
 import com.tabiul.tamagotchi.stat.HealthStat;
 import com.tabiul.tamagotchi.stat.Stat;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -99,9 +100,9 @@ public class Tamagotchi implements Observer {
                 break;
             case STAT_KEYWORD:
                 Map<String, String> m = new LinkedHashMap<>();
-                m.put("name" , pet.getName());
-                m.put("sex" , pet.getSex());
-                m.put("age" , Long.toString(pet.getAge()));
+                m.put("name", pet.getName());
+                m.put("sex", pet.getSex());
+                m.put("age", Long.toString(pet.getAge()));
                 for (Stat s : pet.getStats().values()) {
                     m.put(s.name(), Long.toString(s.getStat()));
                 }
@@ -158,7 +159,7 @@ public class Tamagotchi implements Observer {
         for (Stat stat : pet.getStats().values()) {
             stat.updateStat(50);
         }
-        Configuration configuration = new Configuration();
+        Configuration configuration = Configuration.newInstance();
         System.out.println("initializing tamagotchi world.....");
         try (Universe universe = new Universe(pet, configuration)) {
             universe.addObserver(tamagotchi);

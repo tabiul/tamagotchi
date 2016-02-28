@@ -1,9 +1,9 @@
 package com.tabiul.tamagotchi.event;
 
-import com.tabiul.tamagotchi.Configuration;
-import com.tabiul.tamagotchi.Notification;
+import com.tabiul.tamagotchi.util.Configuration;
+import com.tabiul.tamagotchi.util.Notification;
 import com.tabiul.tamagotchi.Pet;
-import com.tabiul.tamagotchi.TimeUtils;
+import com.tabiul.tamagotchi.util.Time;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -25,14 +25,14 @@ public abstract class Event {
     protected final Configuration configuration;
     protected final Consumer<Class<? extends Event>> generateEvent;
     protected final Pet pet;
-    protected TimeUtils timeUtils;
+    protected Time time;
 
     public Event(Pet pet, Configuration configuration, Consumer<Class<? extends Event>>
         generateEvent) {
         this.pet = pet;
         this.configuration = configuration;
         this.generateEvent = generateEvent;
-        this.timeUtils = new TimeUtils(configuration);
+        this.time = new Time(configuration);
     }
 
     public abstract Optional<Notification> action(long currTick);
