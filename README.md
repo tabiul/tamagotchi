@@ -96,6 +96,9 @@ Since the Tamagotchi  world is designed as a ___Event Loop___ there is no need o
    * locate the jar in the folder `build\libs`
    * launch the game via the command `java -jar tamagotchi-1.0-SNAPSHOT.jar`
 
+## clean
+`./gradlew clean`
+   
 ## build jar
 `./gradlew jar`
 
