@@ -10,6 +10,8 @@ apply plugin: "jacoco"
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+defaultTasks = ["clean", "build", "jar"]
+
 repositories {
     mavenCentral()
 }

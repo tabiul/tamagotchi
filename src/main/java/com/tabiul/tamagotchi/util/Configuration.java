@@ -12,7 +12,6 @@ public class Configuration {
     private long cleanPooWithinHour = 1;
 
     private Configuration() {
-
     }
 
     public static Configuration newInstance() {
@@ -20,7 +19,6 @@ public class Configuration {
     }
 
     public long getTickPerSecond() {
-
         return tickPerSecond;
     }
 
@@ -29,7 +27,6 @@ public class Configuration {
     }
 
     public long getHowOftenGenerateTick() {
-
         return howOftenGenerateTick;
     }
 
@@ -38,17 +35,14 @@ public class Configuration {
     }
 
     public long getMaxAge() {
-
         return maxAge;
     }
 
     public void setMaxAge(long maxAge) {
-
         this.maxAge = maxAge;
     }
 
     public long getHealthValue() {
-
         return healthValue;
     }
 
@@ -57,7 +51,6 @@ public class Configuration {
     }
 
     public long getHappinessValue() {
-
         return happinessValue;
     }
 

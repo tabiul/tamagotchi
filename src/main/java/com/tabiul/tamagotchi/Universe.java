@@ -121,12 +121,10 @@ public class Universe extends Observable implements Closeable {
     }
 
     public boolean isUniverseDead() {
-
         return isDead;
     }
 
     public long getTick() {
-
         return tick.get();
     }
 

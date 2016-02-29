@@ -8,19 +8,16 @@ public class HappinessStat implements Stat {
 
     @Override
     public String name() {
-
         return "happiness";
     }
 
     @Override
     public void updateStat(long val) {
-
         this.val = val;
     }
 
     @Override
     public long getStat() {
-
         return val;
     }
 

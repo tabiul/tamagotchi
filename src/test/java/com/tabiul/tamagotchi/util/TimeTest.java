@@ -1,4 +1,4 @@
-package com.tabiul.tamagotchi;
+package com.tabiul.tamagotchi.util;
 
 import com.tabiul.tamagotchi.util.Configuration;
 import com.tabiul.tamagotchi.util.Time;
@@ -18,7 +18,6 @@ public class TimeTest {
         Time time = new Time(configuration);
         assertEquals(10, time.second(0, 1), 0.0);
         assertEquals(20, time.second(0, 2), 0.0);
-
     }
 
     @Test

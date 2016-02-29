@@ -8,7 +8,6 @@ public class HealthStat implements Stat {
 
     @Override
     public String name() {
-
         return "health";
     }
 
@@ -19,7 +18,13 @@ public class HealthStat implements Stat {
 
     @Override
     public long getStat() {
-
         return this.val;
+    }
+
+    @Override
+    public String toString() {
+        return "HealthStat{" +
+            "val=" + val +
+            '}';
     }
 }
